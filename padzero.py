@@ -96,12 +96,12 @@ def app(path: str, width: int = None, template: str = None):
 
     results = [
         (_convert(x, width, color=False), y, _convert(x, width, color=True))
-        for x, y in zip(patterns, files)
+        for x, y in zip(patterns, files, strict=True)
     ]
     results.sort()
 
-    for result in results:
-        print_stdout(result[2] + result[1].suffix)
+    for _, file, colored_newname in results:
+        print_stdout(f'{file.name} -> ' + colored_newname + file.suffix)
 
     if input('Press Y to rename...: ').lower() == 'y':
         for newname, file, _ in results:
